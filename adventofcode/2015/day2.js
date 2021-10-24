@@ -1,3 +1,4 @@
+// https://adventofcode.com/2015/day/2
 let input = `4x23x21
 22x29x19
 11x4x11
@@ -1001,24 +1002,57 @@ let input = `4x23x21
 // l w h 
 input = input.split('\n');
 
-let total = 0;
 
-const surfaceArea = (l,w,h) => {
-    return 2 * l * w + 2 * w * h + 2 * h * l;
+function part1() {
+    let total = 0;
+
+    const surfaceArea = (l,w,h) => {
+        return 2 * l * w + 2 * w * h + 2 * h * l;
+    }
+    
+    const slack = (sides) => {
+        let sortedSides = sides.sort((a,b) => a - b);
+        return sortedSides[0] * sortedSides[1];
+    }
+    
+    input.forEach((box) => {
+        const sideArr = box.split('x').map(Number);
+        const l = sideArr[0];
+        const w = sideArr[1];
+        const h = sideArr[2];
+        total += surfaceArea(l,w,h);
+        total += slack(sideArr);
+    })
+    
+    return total;
 }
 
-const slack = (sides) => {
-    let sortedSides = sides.sort((a,b) => a - b);
-    return sortedSides[0] * sortedSides[1];
+function part2() {
+    let total = 0;
+
+    const wrap = (l, w, h) => {
+        let option1 = l + l + w + w;
+        let option2 = w + w + h + h;
+        let option3 = h + h + l + l;
+        return Math.min(option1, option2, option3);
+    }
+    
+    const bow = (l, w, h) => {
+        return l * w * h;
+    }
+    
+    input.forEach((box) => {
+        const sideArr = box.split('x').map(Number);
+        const l = sideArr[0];
+        const w = sideArr[1];
+        const h = sideArr[2];
+        total += wrap(l, w, h);
+        total += bow(l,w,h);
+    })
+    
+    return total;
 }
 
-input.forEach((box) => {
-    const sideArr = box.split('x').map(Number);
-    const l = sideArr[0];
-    const w = sideArr[1];
-    const h = sideArr[2];
-    total += surfaceArea(l,w,h);
-    total += slack(sideArr);
-})
 
-console.log(total);
+console.log('part1', part1());
+console.log('part2', part2());
