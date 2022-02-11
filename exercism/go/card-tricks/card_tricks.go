@@ -35,7 +35,5 @@ func RemoveItem(slice []int, index int) []int {
 	if index < 0 || index >= len(slice) {
 		return slice
 	}
-	afterIndex := slice[index+1:]
-	beforeIndex := slice[:index]
-	return append(beforeIndex, afterIndex...)
+	return append(slice[:index], slice[index+1:]...)
 }
