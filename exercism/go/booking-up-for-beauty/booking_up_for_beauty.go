@@ -1,7 +1,7 @@
 package booking
 
 import (
-	"strconv"
+	"fmt"
 	"time"
 )
 
@@ -27,15 +27,7 @@ func IsAfternoonAppointment(date string) bool {
 // Description returns a formatted string of the appointment time
 func Description(date string) string {
 	datetime, _ := time.Parse("1/2/2006 15:04:05", date)
-	weekday := datetime.Weekday().String()
-	month := datetime.Month().String()
-	day := strconv.Itoa(datetime.Day())
-	hour := strconv.Itoa(datetime.Hour())
-	mins := strconv.Itoa(datetime.Minute())
-	year := strconv.Itoa(datetime.Year())
-	return "You have an appointment on " + weekday +
-		", " + month + " " + string(day) + ", " +
-		year + ", at " + hour + ":" + mins + "."
+	return fmt.Sprintf("You have an appointment on %s", datetime.Format("Monday, January 2, 2006, at 15:04."))
 }
 
 // AnniversaryDate returns a Time with this year's anniversary
