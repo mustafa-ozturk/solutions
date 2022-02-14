@@ -3,27 +3,20 @@ package birdwatcher
 // TotalBirdCount return the total bird count by summing
 // the individual day's counts.
 func TotalBirdCount(birdsPerDay []int) int {
-	birds := 0
-	for i := 0; i < len(birdsPerDay); i++ {
-		birds += birdsPerDay[i]
+	sum := 0
+	for _, count := range birdsPerDay {
+		sum += count
 	}
-	return birds
+	return sum
 }
 
 // BirdsInWeek returns the total bird count by summing
 // only the items belonging to the given week.
 func BirdsInWeek(birdsPerDay []int, week int) int {
-	birds := 0
-	startDay := 0
-	if week == 1 {
-		startDay = 0
-	} else {
-		startDay = (week - 1) * 7
-	}
-	for i := startDay; i < week*7; i++ {
-		birds += birdsPerDay[i]
-	}
-	return birds
+	// for week 2
+	// start at index ( 2 - 1 ) * 7 = 7
+	// end at index 2 *  7 = 14 (excludes last one, so ends at index 13)
+	return TotalBirdCount(birdsPerDay[(week-1)*7 : week*7])
 }
 
 // FixBirdCountLog returns the bird counts after correcting
