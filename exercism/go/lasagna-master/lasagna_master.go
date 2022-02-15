@@ -1,4 +1,4 @@
-package lasagna
+package lasagnamanster
 
 // TODO: define the 'PreparationTime()' function
 func PreparationTime(layers []string, prepTime int) int {
