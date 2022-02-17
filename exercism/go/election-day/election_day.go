@@ -13,16 +13,17 @@ type ElectionResult struct {
 // NewVoteCounter returns a new vote counter with
 // a given number of inital votes.
 func NewVoteCounter(initialVotes int) *int {
-	var votes *int = &initialVotes
-	return votes
+	// var votes *int = &initialVotes
+	// return votes
+	return &initialVotes
 }
 
 // VoteCount extracts the number of votes from a counter.
 func VoteCount(counter *int) int {
-	if counter == nil {
-		return 0
+	if counter != nil {
+		return *counter
 	}
-	return *counter
+	return 0
 }
 
 // IncrementVoteCount increments the value in a vote counter
@@ -42,5 +43,5 @@ func DisplayResult(result *ElectionResult) string {
 
 // DecrementVotesOfCandidate decrements by one the vote count of a candidate in a map
 func DecrementVotesOfCandidate(results map[string]int, candidate string) {
-	results[candidate] -= 1
+	results[candidate]--
 }
