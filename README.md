@@ -1,6 +1,6 @@
 My solutions to various programming problems in various languages.
 
-This markdown file is built with my terrible WIP Go script [build-readme.go](build-readme.go).
+This readme is built with my terrible WIP Go script [build-readme.go](build-readme.go).
 
 | Language | Problems solved |
 | --- | --: |
