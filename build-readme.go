@@ -42,7 +42,7 @@ func main() {
 	}
 	defer f.Close()
 
-	msg := "My solutions to various programming problems in various languages.\n\nThis markdown file is built with my terrible WIP Go script [build-readme.go](build-readme.go).\n\n"
+	msg := "My solutions to various programming problems in various languages.\n\nThis readme is built with my terrible WIP Go script [build-readme.go](build-readme.go).\n\n"
 	table := fmt.Sprintf(
 		"| Language | Problems solved |\n| --- | --: |\n| Javascript | %d |\n| Go | %d |\n| Typescript | %d |\n",
 		jscount, gocount, tscount)
