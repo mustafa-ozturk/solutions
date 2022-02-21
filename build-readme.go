@@ -42,12 +42,13 @@ func main() {
 	}
 	defer f.Close()
 
-	msg := "My solutions to various programming problems in various languages.\n\nThis readme is built with my terrible WIP Go script [build-readme.go](build-readme.go).\n\n"
+	msg := "This readme was built with my terrible WIP Go script [build-readme.go](build-readme.go).\n\n"
+	total := fmt.Sprintf("Total problems solved: **%d**\n\n", jscount+gocount+tscount)
 	table := fmt.Sprintf(
 		"| Language | Problems solved |\n| --- | --: |\n| Javascript | %d |\n| Go | %d |\n| Typescript | %d |\n",
 		jscount, gocount, tscount)
 
-	_, writeErr := f.WriteString(msg + table)
+	_, writeErr := f.WriteString(msg + total + table)
 
 	if writeErr != nil {
 		log.Fatal(writeErr)
