@@ -1,9 +1,9 @@
 This readme was built with my terrible WIP Go script [build-readme.go](build-readme.go).
 
-Total problems solved: **260**
+Total problems solved: **265**
 
 | Language | Problems solved |
 | --- | --: |
 | Javascript | 226 |
-| Go | 31 |
+| Go | 36 |
 | Typescript | 3 |
