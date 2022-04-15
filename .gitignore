@@ -1,4 +1,14 @@
+*
+!*.*
+!*/
+
 .exercism
 HELP.md
 *_test*
 HINTS.md
+test
+CMakeLists.txt
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles
+Makefile

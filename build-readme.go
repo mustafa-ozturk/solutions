@@ -12,12 +12,17 @@ func main() {
 	gocount := 0
 	jscount := 0
 	tscount := 0
+	cppcount := 0
 
 	err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		if !strings.Contains(info.Name(), "test") && !strings.Contains(info.Name(), "json") {
+		if !strings.Contains(info.Name(), "test") &&
+			!strings.Contains(info.Name(), "json") &&
+			!strings.Contains(info.Name(), "CMake") &&
+			!strings.Contains(info.Name(), "CMake") &&
+			!strings.Contains(info.Name(), ".o") {
 			switch {
 			case strings.Contains(info.Name(), ".go"):
 				gocount++
@@ -27,6 +32,9 @@ func main() {
 				break
 			case strings.Contains(info.Name(), ".ts"):
 				tscount++
+				break
+			case strings.Contains(info.Name(), ".cpp"):
+				cppcount++
 				break
 			}
 		}
@@ -45,8 +53,8 @@ func main() {
 	msg := "This readme was built with my terrible WIP Go script [build-readme.go](build-readme.go).\n\n"
 	total := fmt.Sprintf("Total problems solved: **%d**\n\n", jscount+gocount+tscount)
 	table := fmt.Sprintf(
-		"| Language | Problems solved |\n| --- | --: |\n| Javascript | %d |\n| Go | %d |\n| Typescript | %d |\n",
-		jscount, gocount, tscount)
+		"| Language | Problems solved |\n| --- | --: |\n| Javascript | %d |\n| Go | %d |\n| Typescript | %d |\n| C++ | %d |\n",
+		jscount, gocount, tscount, cppcount)
 
 	_, writeErr := f.WriteString(msg + total + table)
 
