@@ -2,7 +2,7 @@
 # run cpp exercism tests on linux
 
 #inside the dir
-cmake -G "Unix MakeFiles"
+cmake -G "Unix Makefiles"
 make
 ```
 
