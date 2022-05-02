@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main()
+int watermelon()
 {
     int w = 0;
     std::cin >> w;
