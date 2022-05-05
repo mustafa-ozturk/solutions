@@ -7,4 +7,4 @@ Total problems solved: **274**
 | Javascript | 226 |
 | Go | 39 |
 | Typescript | 9 |
-| C++ | 8 |
+| C++ | 9 |
