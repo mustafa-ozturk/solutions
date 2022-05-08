@@ -19,7 +19,7 @@ int main() {
             {".go",  "Go"},
             {".ts",  "TypeScript"},
     };
-    std::unordered_map<std::string, int> langCount;
+    std::unordered_map<std::string, int> extensionCount;
     int total = 0;
 
     // go through all directories and files in this repository
@@ -44,16 +44,16 @@ int main() {
 
         // check file extension
         if (langs.count(fileExtension) > 0) {
-            langCount[fileExtension]++;
+            extensionCount[fileExtension]++;
             total++;
         }
     }
 
     /* copy map into vec and sort it */
     std::vector<fileNameCount> fileNameCountVec;
-    for (const auto& pair : langCount)
+    for (const auto& [name, count] : extensionCount)
     {
-        fileNameCount fc {.name =  pair.first, .count =  pair.second};
+        fileNameCount fc {name, count};
         fileNameCountVec.emplace_back(fc);
     }
     std::sort(
@@ -71,8 +71,8 @@ int main() {
     f << "| Language | Problems solved |\n";
     f << "| --- | ---: |\n";
 
-    for (const auto& [lang, count]: fileNameCountVec) {
-        f << "| " << langs[lang] << " | " << count << " |\n";
+    for (const auto& [name, count]: fileNameCountVec) {
+        f << "| " << langs[name] << " | " << count << " |\n";
     }
 
     f << "\n\nTotal Problems Solved: **" << total << "**\n";
