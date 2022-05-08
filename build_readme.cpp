@@ -1,12 +1,18 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <utility>
 #include <vector>
 #include <algorithm>
 
-struct fileNameCount {
+struct FileNameCount {
     std::string name;
     int count{};
+
+    // move to avoid unnecessary copies
+    FileNameCount(std::string name, int count)
+        : name(std::move(name)), count(count)
+    {}
 };
 
 int main() {
@@ -50,16 +56,16 @@ int main() {
     }
 
     /* copy map into vec and sort it */
-    std::vector<fileNameCount> fileNameCountVec;
+    std::vector<FileNameCount> fileNameCountVec;
     for (const auto& [name, count] : extensionCount)
     {
-        fileNameCount fc {name, count};
-        fileNameCountVec.emplace_back(fc);
+        // construct Struct in the vector
+        fileNameCountVec.emplace_back(name, count);
     }
     std::sort(
             fileNameCountVec.begin(),
             fileNameCountVec.end(),
-            [](const fileNameCount& a, const fileNameCount& b) {
+            [](const FileNameCount& a, const FileNameCount& b) {
                 return a.count > b.count;
             });
 
