@@ -4,57 +4,63 @@
 #include <vector>
 #include <algorithm>
 
+struct fileNameCount {
+    std::string name;
+    int count{};
+};
+
 int main() {
     namespace fs = std::filesystem;
-    using strIntPair = std::pair<std::string, int>;
 
-    std::vector<std::string> usedLangs = {"cpp", "js", "go", "ts"};
     std::vector<std::string> filters = {"test", "CMakeFiles"};
-    std::unordered_map<std::string, std::string> fullLangName = {
-            {"cpp", "C++"},
-            {"js",  "Javascript"},
-            {"go",  "Go"},
-            {"ts",  "Typescript"},
+    std::unordered_map<std::string, std::string> langs = {
+            {".cpp", "C++"},
+            {".js",  "JavaScript"},
+            {".go",  "Go"},
+            {".ts",  "TypeScript"},
     };
     std::unordered_map<std::string, int> langCount;
     int total = 0;
 
     // go through all directories and files in this repository
     // start at "../" because I run the file from /solutions/cmake-build-debug
-    for (const auto& file: fs::recursive_directory_iterator("../")) {
-        std::string filePathStr = file.path().string();
-        std::string fileExtension = filePathStr.substr(filePathStr.find_last_of('.') + 1);
+    for (const auto& entry: fs::recursive_directory_iterator("../")) {
+        std::string filePath = entry.path().string();
 
-        // only include used languages
-        if (std::find(usedLangs.begin(), usedLangs.end(), fileExtension) != usedLangs.end()) {
-            // skip misc file
-            bool include = true;
-            for (const auto& filter: filters) {
-                if (filePathStr.find(filter) != std::string::npos) {
-                    include = false;
-                    break;
-                }
+        // skip test/cmake files
+        bool skip = false;
+        for (const auto& filter: filters) {
+            if (filePath.find(filter) != std::string::npos) {
+                skip = true;
+                break;
             }
-            if (!include) {
-                continue;
-            }
+        }
+        if (skip)
+        {
+            continue;
+        }
 
+        std::string fileExtension = entry.path().extension();
+
+        // check file extension
+        if (langs.count(fileExtension) > 0) {
             langCount[fileExtension]++;
             total++;
         }
     }
 
     /* copy map into vec and sort it */
-    std::vector<strIntPair> vec;
+    std::vector<fileNameCount> fileNameCountVec;
     for (const auto& pair : langCount)
     {
-        vec.emplace_back(pair);
+        fileNameCount fc {.name =  pair.first, .count =  pair.second};
+        fileNameCountVec.emplace_back(fc);
     }
     std::sort(
-            vec.begin(),
-            vec.end(),
-            [](const strIntPair& a, const strIntPair& b) {
-                return a.second > b.second;
+            fileNameCountVec.begin(),
+            fileNameCountVec.end(),
+            [](const fileNameCount& a, const fileNameCount& b) {
+                return a.count > b.count;
             });
 
     /* write to readme file */
@@ -65,8 +71,8 @@ int main() {
     f << "| Language | Problems solved |\n";
     f << "| --- | ---: |\n";
 
-    for (const auto& [lang, count]: vec) {
-        f << "| " << fullLangName[lang] << " | " << count << " |\n";
+    for (const auto& [lang, count]: fileNameCountVec) {
+        f << "| " << langs[lang] << " | " << count << " |\n";
     }
 
     f << "\n\nTotal Problems Solved: **" << total << "**\n";

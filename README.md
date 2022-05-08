@@ -2,10 +2,10 @@ This readme was built with [build_readme.cpp](build_readme.cpp)
 
 | Language | Problems solved |
 | --- | ---: |
-| Javascript | 226 |
+| JavaScript | 226 |
 | Go | 38 |
-| C++ | 12 |
-| Typescript | 3 |
+| C++ | 17 |
+| TypeScript | 3 |
 
 
-Total Problems Solved: **279**
+Total Problems Solved: **284**
