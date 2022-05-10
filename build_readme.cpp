@@ -5,17 +5,19 @@
 #include <vector>
 #include <algorithm>
 
-struct FileNameCount {
+struct FileNameCount
+{
     std::string name;
     int count{};
 
     // move to avoid unnecessary copies
     FileNameCount(std::string name, int count)
-        : name(std::move(name)), count(count)
+            : name(std::move(name)), count(count)
     {}
 };
 
-int main() {
+int main()
+{
     namespace fs = std::filesystem;
 
     std::vector<std::string> filters = {"test", "CMakeFiles"};
@@ -30,13 +32,16 @@ int main() {
 
     // go through all directories and files in this repository
     // start at "../" because I run the file from /solutions/cmake-build-debug
-    for (const auto& entry: fs::recursive_directory_iterator("../")) {
+    for (const auto& entry: fs::recursive_directory_iterator("../"))
+    {
         std::string filePath = entry.path().string();
 
         // skip test/cmake files
         bool skip = false;
-        for (const auto& filter: filters) {
-            if (filePath.find(filter) != std::string::npos) {
+        for (const auto& filter: filters)
+        {
+            if (filePath.find(filter) != std::string::npos)
+            {
                 skip = true;
                 break;
             }
@@ -49,7 +54,8 @@ int main() {
         std::string fileExtension = entry.path().extension();
 
         // check file extension
-        if (langs.count(fileExtension) > 0) {
+        if (langs.count(fileExtension) > 0)
+        {
             extensionCount[fileExtension]++;
             total++;
         }
@@ -57,7 +63,7 @@ int main() {
 
     /* copy map into vec and sort it */
     std::vector<FileNameCount> fileNameCountVec;
-    for (const auto& [name, count] : extensionCount)
+    for (const auto& [name, count]: extensionCount)
     {
         // construct Struct in the vector
         fileNameCountVec.emplace_back(name, count);
@@ -65,7 +71,8 @@ int main() {
     std::sort(
             fileNameCountVec.begin(),
             fileNameCountVec.end(),
-            [](const FileNameCount& a, const FileNameCount& b) {
+            [](const FileNameCount& a, const FileNameCount& b)
+            {
                 return a.count > b.count;
             });
 
@@ -77,7 +84,8 @@ int main() {
     f << "| Language | Problems solved |\n";
     f << "| --- | ---: |\n";
 
-    for (const auto& [name, count]: fileNameCountVec) {
+    for (const auto& [name, count]: fileNameCountVec)
+    {
         f << "| " << langs[name] << " | " << count << " |\n";
     }
 
