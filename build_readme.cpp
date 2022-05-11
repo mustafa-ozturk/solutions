@@ -4,16 +4,29 @@
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
-struct FileNameCount
+class FileNameCount
 {
-    std::string name;
-    int count{};
-
+public:
+    FileNameCount() = delete;
     // move to avoid unnecessary copies
     FileNameCount(std::string name, int count)
-            : name(std::move(name)), count(count)
+            : m_name(std::move(name)), m_count(count)
     {}
+
+    std::string getName() const
+    {
+        return m_name;
+    }
+
+    int getCount() const
+    {
+        return m_count;
+    }
+private:
+    std::string m_name;
+    int m_count = 0;
 };
 
 int main()
@@ -73,24 +86,24 @@ int main()
             fileNameCountVec.end(),
             [](const FileNameCount& a, const FileNameCount& b)
             {
-                return a.count > b.count;
+                return a.getCount() > b.getCount();
             });
 
     /* write to readme file */
-    std::ofstream f;
+    std::ofstream file;
     // file is run from /solutions/cmake-build-debug
-    f.open("../README.md");
-    f << "This readme was built with [build_readme.cpp](build_readme.cpp)\n\n";
-    f << "| Language | Problems solved |\n";
-    f << "| --- | ---: |\n";
+    file.open("../README.md");
+    file << "This readme was built with [build_readme.cpp](build_readme.cpp)\n\n";
+    file << "| Language | Problems solved |\n";
+    file << "| --- | ---: |\n";
 
-    for (const auto& [name, count]: fileNameCountVec)
+    for (const auto& fileNameCount: fileNameCountVec)
     {
-        f << "| " << langs[name] << " | " << count << " |\n";
+        file << "| " << langs[fileNameCount.getName()] << " | " << fileNameCount.getCount() << " |\n";
     }
 
-    f << "\n\nTotal Problems Solved: **" << total << "**\n";
-    f.close();
+    file << "\n\nTotal Problems Solved: **" << total << "**\n";
+    file.close();
     std::cout << "README BUILT ✓" << std::endl;
 
     return 0;
