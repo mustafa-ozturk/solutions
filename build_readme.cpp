@@ -73,9 +73,9 @@ int main()
             total++;
         }
     }
-
     /* copy map into vec and sort it */
     std::vector<FileNameCount> fileNameCountVec;
+    fileNameCountVec.reserve(extensionCount.size());
     for (const auto& [name, count]: extensionCount)
     {
         // construct Struct in the vector
