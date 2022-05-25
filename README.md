@@ -4,8 +4,8 @@ This readme was built with [build_readme.cpp](build_readme.cpp)
 | --- | ---: |
 | JavaScript | 226 |
 | Go | 38 |
-| C++ | 22 |
+| C++ | 25 |
 | TypeScript | 3 |
 
 
-Total Problems Solved: **289**
+Total Problems Solved: **292**
